@@ -8,6 +8,7 @@ mongoose
   .connect(process.env.DB_CONNECT, {
     useNewUrlParser: true,
     useFindAndModify: false,
+    useUnifiedTopology: true,
   })
   .catch((e) => {
     console.error("Connection error", e.message);
