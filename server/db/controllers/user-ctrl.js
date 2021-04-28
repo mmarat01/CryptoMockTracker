@@ -16,7 +16,7 @@ dotenv.config();
     PASSWORD: fountain
 
 */
-const register = async (req, res) => {
+const register = (req, res) => {
   User.findOne({ username: req.body.username }).then((user) => {
     if (user) {
       return res
@@ -48,6 +48,7 @@ const register = async (req, res) => {
     }
   });
 };
+
 const login = (req, res) => {
   User.findOne({ username: req.body.username }).then((user) => {
     if (!user)
