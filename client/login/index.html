@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<script>
+
+  // var xhttp = new XMLHttpRequest()
+  // xhttp.onreadystatechange = function () {
+  //   if (this.readyState == 4 && this.status == 200) {
+  //     document.cookie =
+  //       `token=${this.getResponseHeader("auth-token")}; expires=Thu, 2 Aug 2100 20:47:11 UTC; path=/`
+  //   }
+  // }
+  // xhttp.open("POST", "http://localhost:3000/api/user/login", true)
+  // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+  // xhttp.send("username=mijael@a.com&password=madrid")
+
+</script>
+
+<body>
+  <!----BEGIN HEADER--->
+  <header class="navbar">
+    <a href="../src/index.html">
+      <img id="logo" src="../imgs/asdf" height="45" />
+      <!--TODO-->
+    </a>
+    <a class="toggle-button" href="#">
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+    </a>
+    <nav class="nav-links">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../wallet/index.html">Wallet</a></li>
+        <li><a href="../profile/index.html">Profile</a></li>
+        <li><a href="../log-in/index.html">Log In</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!--END HEADER-->
+
+  <script>
+    ///////////// cookie functions //////////////////
+    function setCookie(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+      var expires = "expires=" + d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+    ////////////////////////////////////////////////////
+
+    if (getCookie('token') == "") {
+      document.write(`
+      <form action="/api/user/login" method="POST">
+        <label for="username"> Email: </label>
+        <input name="username" type="email" />
+        <label for="password"> Password: </label>
+        <input name="password" type="password" />
+        <input id="login-button" type="button" name="login-button" value="login" />
+      </form>
+      `)
+      document.getElementById('login-button').onclick = () => {
+        var xhttp = new XMLHttpRequest()
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            let response = JSON.parse(this.response)
+            alert(response.message)
+            document.cookie =
+              `token=${this.getResponseHeader("auth-token")}; expires=Thu, 2 Aug 2100 20:47:11 UTC; path=/`
+            location.reload()
+          } else if (this.readyState == 4 && this.status == 400) {
+            let response = JSON.parse(this.response)
+            alert(response.message)
+          }
+        }
+        xhttp.open("POST", "http://localhost:3000/api/user/login", true)
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        xhttp.send(`username=${document.forms[0].username.value}&password=${document.forms[0].password.value}`)
+      }
+    } else {
+      document.write(`
+      <p> User is already logged in </p>
+      <p> User token is: ${getCookie('token')} </p>
+      <button id="logout-btn"> logout </button>
+      `)
+      document.getElementById('logout-btn').onclick = () => {
+        setCookie('token', '', 0)
+        location.reload()
+      }
+    }
+  </script>
+
+
+</body>
+
+</html>
