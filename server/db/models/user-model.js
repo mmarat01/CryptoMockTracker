@@ -17,3 +17,19 @@ const User = new Schema({
 });
 
 module.exports = mongoose.model("users", User);
+
+// HOMEPAGE
+/*************************************
+     
+  NAME 
+
+  ticker                    [ADD BUTTON]
+ ***************************************/
+
+// PROFILE
+/*************************************
+     
+  NAME (ticker)                   Amount
+
+  Acquired: time            [DEL BUTTON]
+ ***************************************/
