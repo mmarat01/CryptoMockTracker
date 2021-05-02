@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="index.css" />
 </head>
 
-<body>
+<body style="background-color: #3021b0">
   <!----BEGIN HEADER--->
   <header class="navbar">
     <a href="../src/index.html">
@@ -25,9 +25,9 @@
     <nav class="nav-links">
       <ul>
         <li><a href="../index.html">Home</a></li>
-        <li><a href="../wallet/index.html">Wallet</a></li>
         <li><a href="../profile/index.html">Profile</a></li>
-        <li><a href="../log-in/index.html">Log In</a></li>
+        <li><a href="../login/index.html">Log In</a></li>
+        <li><a href="../register/index.html">Register</a></li>
       </ul>
     </nav>
   </header>
@@ -60,13 +60,23 @@
 
     if (getCookie('token') == "") {
       document.write(`
-      <form action="/api/user/login" method="POST">
-        <label for="username"> Email: </label>
-        <input name="username" type="email" />
-        <label for="password"> Password: </label>
-        <input name="password" type="password" />
-        <input id="login-button" type="button" name="login-button" value="login" />
-      </form>
+    <div class="body-div">
+      <div class="central">
+        <h1 class="page-title" style="display: none">Login</h1>
+        <h2>LOGIN</h2>
+        <form action="/api/user/login" method="POST" autocomplete="off">
+            <label for="username"> Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+            <input name="username" type="email" />
+            <br/>
+            <label for="password"> Password </label>
+            <input name="password" type="password" />
+            <br/><br/>
+            <div class="login-button-div">
+                <input id="login-button" type="button" name="login-button" value="Login" />
+            </div>
+        </form> 
+      </div>
+    </div>
       `)
       document.getElementById('login-button').onclick = () => {
         var xhttp = new XMLHttpRequest()
