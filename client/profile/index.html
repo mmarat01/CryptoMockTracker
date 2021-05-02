@@ -8,7 +8,6 @@
   <title>Login</title>
   <script src="../scripts/cookies.js"></script>
   <link rel="stylesheet" href="../style.css" />
-  <link rel="stylesheet" href="index.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -42,7 +41,7 @@
               <a class="nav-link" href="/profile">Profile </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/register">Logout</a>
+              <a class="nav-link" href="/login">Logout</a>
             </li>
             `)
           }
@@ -51,59 +50,6 @@
     </div>
   </nav>
   <!--END HEADER-->
-
-  <script>
-
-    if (getCookie('token') == "") {
-      document.write(`
-    <div class="body-div">
-      <div class="central">
-        <h1 class="page-title" style="display: none">Login</h1>
-        <h2>LOGIN</h2>
-        <form action="/api/user/login" method="POST" autocomplete="off">
-            <label for="username"> Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
-            <input name="username" type="email" />
-            <br/>
-            <label for="password"> Password </label>
-            <input name="password" type="password" />
-            <br/><br/>
-            <div class="login-button-div">
-                <input id="login-button" type="button" name="login-button" value="Login" />
-            </div>
-        </form> 
-      </div>
-    </div>
-      `)
-      document.getElementById('login-button').onclick = () => {
-        var xhttp = new XMLHttpRequest()
-        xhttp.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            let response = JSON.parse(this.response)
-            alert(response.message)
-            document.cookie =
-              `token=${this.getResponseHeader("auth-token")}; expires=Thu, 2 Aug 2100 20:47:11 UTC; path=/`
-            window.location.href = "../"
-          } else if (this.readyState == 4 && this.status == 400) {
-            let response = JSON.parse(this.response)
-            alert(response.message)
-          }
-        }
-        xhttp.open("POST", "../api/user/login", true)
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-        xhttp.send(`username=${document.forms[0].username.value}&password=${document.forms[0].password.value}`)
-      }
-    } else {
-      document.write(`
-      <p> User is already logged in </p>
-      <p> User token is: ${getCookie('token')} </p>
-      <button id="logout-btn"> logout </button>
-      `)
-      document.getElementById('logout-btn').onclick = () => {
-        setCookie('token', '', 0)
-        location.reload()
-      }
-    }
-  </script>
 
 
 </body>
