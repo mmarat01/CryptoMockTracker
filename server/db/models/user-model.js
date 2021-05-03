@@ -12,7 +12,12 @@ const User = new Schema({
     required: true,
   },
   holdings: [
-    { name: String, ticker: String, amount: Number, purchase_time: String },
+    {
+      name: String,
+      ticker: String,
+      purchase_price: Number,
+      purchase_time: String,
+    },
   ],
 });
 

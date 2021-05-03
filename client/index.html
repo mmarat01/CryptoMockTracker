@@ -80,7 +80,7 @@
               <a class="nav-link" href="/profile">Profile </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/login">Logout</a>
+              <a class="nav-link" href="/logout">Logout</a>
             </li>
             `);
             }
@@ -119,12 +119,13 @@
       }
     </script>
     <script>
-      fetch("/api/crypto/all")
-        .then((response) => response.json())
-        .then((dataObj) => {
-          console.log(dataObj.data);
-          let data = dataObj.data;
-          let result = `
+      if (getCookie("token")) {
+        fetch("/api/crypto/all")
+          .then((response) => response.json())
+          .then((dataObj) => {
+            console.log(dataObj.data);
+            let data = dataObj.data;
+            let result = `
         <table style="width: 80%;" class="mt-4 mx-auto table table-striped">
           <thead>
             <tr>
@@ -137,14 +138,14 @@
           </thead>
           <tbody>
           `;
-          for (let i = 0; i < data.length; i++) {
-            const urlParams = new URLSearchParams(window.location.search);
-            const filter = urlParams.get("filter");
-            if (
-              !filter ||
-              data[i].name.toUpperCase().includes(filter.toUpperCase())
-            ) {
-              result += `
+            for (let i = 0; i < data.length; i++) {
+              const urlParams = new URLSearchParams(window.location.search);
+              const filter = urlParams.get("filter");
+              if (
+                !filter ||
+                data[i].name.toUpperCase().includes(filter.toUpperCase())
+              ) {
+                result += `
               <tr>
                 <th scope="row">${i + 1}</th>
                 <td>${data[i].name}</td>
@@ -162,16 +163,17 @@
                 </td>
               </tr>
               `;
-            } else {
-              console.log(data[i].name + " does not include" + filter);
+              } else {
+                console.log(data[i].name + " does not include" + filter);
+              }
             }
-          }
-          result += `
+            result += `
         </tbody>
         </table>
         `;
-          document.getElementById("results").innerHTML = result;
-        });
+            document.getElementById("results").innerHTML = result;
+          });
+      }
     </script>
 
     <!-- Modal -->

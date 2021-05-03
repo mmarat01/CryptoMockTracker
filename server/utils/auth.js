@@ -4,14 +4,17 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const auth = (req, res, next) => {
-  const authHeader = req.headers["auth-token"];
+  const authHeader = req.headers["authorization"]; // req.authorization --> Bearer [token]
   const token = authHeader && authHeader.split(" ")[1];
 
-  if (!token) return res.sendStatus(401);
+  if (!token) {
+    res.sendStatus(401);
+  }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, _id) => {
+  jwt.verify(token, process.env.TOKEN_SECRET, (err, result) => {
     if (err) return res.sendStatus(403);
-    req._id = _id;
+    req.body._id = result._id;
+    console.log(req.body._id);
     next();
   });
 };

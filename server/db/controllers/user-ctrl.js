@@ -2,7 +2,7 @@
 const User = require("../models/user-model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 /* 
@@ -64,14 +64,62 @@ const login = (req, res) => {
       const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
 
       return res
-        .header("auth-token", token)
+        .header("authorization", token)
         .status(200)
         .json({ success: true, message: "logged in!" });
     });
   });
 };
 
+const getUser = (req, res) => {
+  User.findOne({ _id: new mongoose.Types.ObjectId(req.body._id) }).then(
+    (user) => {
+      if (!user)
+        return res
+          .status(400)
+          .json({ success: false, message: "user does not exist" });
+      console.log(user);
+
+      return res.status(200).json({
+        sucess: true,
+        data: { username: user.username, holdings: user.holdings },
+      });
+      f;
+    }
+  );
+};
+
+const addHolding = (req, res) => {
+  const { name, ticker, purchase_price } = req.body;
+  User.findOne({
+    _id: new mongoose.Types.ObjectId(req.body._id),
+  }).then((user) => {
+    if (!user)
+      return res
+        .status(400)
+        .json({ success: false, message: "user does not exist" });
+    user.holdings.name = name;
+    user.holdings.ticker = ticker;
+    user.holdings.purchase_price = purchase_price;
+    user
+      .save()
+      .then(() => {
+        return res.status(200).json({
+          success: true,
+          message: "user holdings updated",
+        });
+      })
+      .catch((err) => {
+        return res
+          .status(400)
+          .json({ success: false, message: "could not update user holdings" });
+      });
+  });
+};
+
 module.exports = {
   register,
   login,
+  getUser,
+  addHolding,
 };

@@ -1,61 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title>Login</title>
+    <script src="../scripts/cookies.js"></script>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="index.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-  <title>Login</title>
-  <script src="../scripts/cookies.js"></script>
-  <link rel="stylesheet" href="../style.css" />
-  <link rel="stylesheet" href="index.css" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
+  <body style="background-color: #3021b0">
+    <!----BEGIN HEADER--->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="../">CryptoTracker</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarTogglerDemo02"
+        aria-controls="navbarTogglerDemo02"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-<body style="background-color: #3021b0">
-  <!----BEGIN HEADER--->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="../">CryptoTracker</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="../">Home</a>
-        </li>
-        <script>
-          if (getCookie("token") == "") {
-            document.write(`
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="../">Home</a>
+          </li>
+          <script>
+            if (getCookie("token") == "") {
+              document.write(`
             <li class="nav-item">
               <a class="nav-link" href="/login">Login </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/register">Register</a>
             </li>
-            `)
-          } else {
-            document.write(`
+            `);
+            } else {
+              document.write(`
             <li class="nav-item">
               <a class="nav-link" href="/profile">Profile </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/register">Logout</a>
             </li>
-            `)
-          }
-        </script>
-      </ul>
-    </div>
-  </nav>
-  <!--END HEADER-->
+            `);
+            }
+          </script>
+        </ul>
+      </div>
+    </nav>
+    <!--END HEADER-->
 
-  <script>
-
-    if (getCookie('token') == "") {
-      document.write(`
+    <script>
+      if (getCookie("token") == "") {
+        document.write(`
     <div class="body-div">
       <div class="central">
         <h1 class="page-title" style="display: none">Login</h1>
@@ -73,48 +86,50 @@
         </form> 
       </div>
     </div>
-      `)
-      document.getElementById('login-button').onclick = () => {
-        var xhttp = new XMLHttpRequest()
-        xhttp.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            let response = JSON.parse(this.response)
-            alert(response.message)
-            document.cookie =
-              `token=${this.getResponseHeader("auth-token")}; expires=Thu, 2 Aug 2100 20:47:11 UTC; path=/`
-            window.location.href = "../"
-          } else if (this.readyState == 4 && this.status == 400) {
-            let response = JSON.parse(this.response)
-            alert(response.message)
-          }
-        }
-        xhttp.open("POST", "../api/user/login", true)
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-        xhttp.send(`username=${document.forms[0].username.value}&password=${document.forms[0].password.value}`)
+      `);
+        document.getElementById("login-button").onclick = () => {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              let response = JSON.parse(this.response);
+              alert(response.message);
+              document.cookie = `token=${this.getResponseHeader(
+                "authorization"
+              )}; expires=Thu, 2 Aug 2100 20:47:11 UTC; path=/`;
+              window.location.href = "../";
+            } else if (this.readyState == 4 && this.status == 400) {
+              let response = JSON.parse(this.response);
+              alert(response.message);
+            }
+          };
+          xhttp.open("POST", "../api/user/login", true);
+          xhttp.setRequestHeader(
+            "Content-type",
+            "application/x-www-form-urlencoded"
+          );
+          xhttp.send(
+            `username=${document.forms[0].username.value}&password=${document.forms[0].password.value}`
+          );
+        };
       }
-    } else {
-      document.write(`
-      <p> User is already logged in </p>
-      <p> User token is: ${getCookie('token')} </p>
-      <button id="logout-btn"> logout </button>
-      `)
-      document.getElementById('logout-btn').onclick = () => {
-        setCookie('token', '', 0)
-        location.reload()
-      }
-    }
-  </script>
+    </script>
+  </body>
 
-
-</body>
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"
+  ></script>
 </html>
