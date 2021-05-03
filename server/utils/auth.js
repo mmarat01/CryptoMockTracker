@@ -11,7 +11,6 @@ const auth = (req, res, next) => {
     res.sendStatus(401);
   }
 
-  console.log(token)
 
   jwt.verify(token, process.env.TOKEN_SECRET, (err, result) => {
     if (err) {
@@ -19,7 +18,6 @@ const auth = (req, res, next) => {
       return res.sendStatus(403);
     }
     req.body._id = result._id;
-    console.log(req.body._id);
     next();
   });
 };

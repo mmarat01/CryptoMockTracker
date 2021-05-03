@@ -7,9 +7,7 @@ const router = express.Router();
 router.post("/register", userCtrl.register);
 router.post("/login", userCtrl.login);
 router.post("/holdings/add", auth, userCtrl.addHolding);
-
+router.post("/holdings/sell", auth, userCtrl.sellHolding);
 router.get("/", auth, userCtrl.getUser);
-/*
-     1.
- */
+
 module.exports = router;

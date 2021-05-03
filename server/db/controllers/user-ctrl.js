@@ -78,7 +78,6 @@ const getUser = (req, res) => {
         return res
           .status(400)
           .json({ success: false, message: "user does not exist" });
-      console.log(user);
 
       return res.status(200).json({
         sucess: true,
@@ -123,9 +122,45 @@ const addHolding = (req, res) => {
   });
 };
 
+const sellHolding = (req, res) => {
+  const { name, ticker, purchase_price } = req.body;
+  User.findOne({
+    _id: new mongoose.Types.ObjectId(req.body._id),
+  }).then((user) => {
+    if (!user)
+      return res
+        .status(400)
+        .json({ success: false, message: "user does not exist" });
+
+    for (let i = 0; i < user.holdings.length; i++) {
+      let holding = user.holdings[i]
+      if (holding.name == name && holding.purchase_price == purchase_price) {
+        user.holdings.splice(i, 1)
+        break
+      }
+    }
+
+    user
+      .save()
+      .then(() => {
+        return res.status(200).json({
+          success: true,
+          message: "user holdings updated",
+        });
+      })
+      .catch((err) => {
+        console.log(err)
+        return res
+          .status(400)
+          .json({ success: false, message: "could not update user holdings" });
+      });
+  });
+}
+
 module.exports = {
   register,
   login,
   getUser,
   addHolding,
+  sellHolding
 };
