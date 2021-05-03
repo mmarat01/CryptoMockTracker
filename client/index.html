@@ -119,12 +119,11 @@
       }
     </script>
     <script>
-      fetch(
-        "https://api.nomics.com/v1/currencies/ticker?key=2d0836d146b5284a4919bdc220a1d3ae&interval=1d,30d&per-page=100&page=1"
-      )
+      fetch("/api/crypto/all")
         .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
+        .then((dataObj) => {
+          console.log(dataObj.data);
+          let data = dataObj.data;
           let result = `
         <table style="width: 80%;" class="mt-4 mx-auto table table-striped">
           <thead>

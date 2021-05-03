@@ -16,8 +16,4 @@ app.use("/api/crypto", cryptoRouter);
 
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-app.get("/mijael", (req, res) => {
-  res.send("habla causita");
-});
-
 app.listen(process.env.PORT || 3000, () => console.log("Server is running!"));
