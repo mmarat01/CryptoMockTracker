@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="../scripts/cookies.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <title>Crypto Tracker</title>
-    <script>
-      const buyCurrency = (data) => {
-        document.getElementById("order-description").innerHTML = `
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="../scripts/cookies.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <title>Crypto Tracker</title>
+  <script>
+    const buyCurrency = (data) => {
+      document.getElementById("order-description").innerHTML = `
       <table>
         <tr>
           <td> Buying:  </td>
@@ -37,36 +32,27 @@
         Warning: Price may change during purchase time.
       </div>
       `;
-      };
-    </script>
-  </head>
+    };
+  </script>
+</head>
 
-  <body>
-    <!----BEGIN HEADER--->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand" href="">CryptoTracker</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarTogglerDemo02"
-        aria-controls="navbarTogglerDemo02"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item active">
-            <a class="nav-link" href="/"
-              >Home<span class="sr-only">(current)</span></a
-            >
-          </li>
+<body>
+  <!----BEGIN HEADER--->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="">CryptoTracker</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+      aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+        </li>
 
-          <script>
-            if (getCookie("token") == "") {
-              document.write(`
+        <script>
+          if (getCookie("token") == "") {
+            document.write(`
             <li class="nav-item">
               <a class="nav-link" href="/login">Login </a>
             </li>
@@ -74,8 +60,8 @@
               <a class="nav-link" href="/register">Register</a>
             </li>
             `);
-            } else {
-              document.write(`
+          } else {
+            document.write(`
             <li class="nav-item">
               <a class="nav-link" href="/profile">Profile </a>
             </li>
@@ -83,16 +69,16 @@
               <a class="nav-link" href="/logout">Logout</a>
             </li>
             `);
-            }
-          </script>
-        </ul>
-      </div>
-    </nav>
-    <!--END HEADER-->
-    <script>
-      if (getCookie("token") == "") {
-        // user is not logged in
-        document.write(`
+          }
+        </script>
+      </ul>
+    </div>
+  </nav>
+  <!--END HEADER-->
+  <script>
+    if (getCookie("token") == "") {
+      // user is not logged in
+      document.write(`
       <div style="text-align: center; margin: 30px 0 0 0">
         <h1> Welcome To CryptoTracker! </h1>
         <h4> Please register or log in to get started. </h4>
@@ -100,9 +86,9 @@
         <a class="btn btn-secondary" href="/register" role="button">Register</a>
       </div>
       `);
-      } else {
-        // user is logged in
-        document.write(`
+    } else {
+      // user is logged in
+      document.write(`
       <div style="text-align: center; margin: 30px 0 0 0">
         <h1> Welcome, User! </h1>
         <h4>Search For Crypto Currencies:</h4>
@@ -116,16 +102,16 @@
         </div>
       </div>
       `);
-      }
-    </script>
-    <script>
-      if (getCookie("token")) {
-        fetch("/api/crypto/all")
-          .then((response) => response.json())
-          .then((dataObj) => {
-            console.log(dataObj.data);
-            let data = dataObj.data;
-            let result = `
+    }
+  </script>
+  <script>
+    if (getCookie("token")) {
+      fetch("/api/crypto/all")
+        .then((response) => response.json())
+        .then((dataObj) => {
+          console.log(dataObj.data);
+          let data = dataObj.data;
+          let result = `
         <table style="width: 80%;" class="mt-4 mx-auto table table-striped">
           <thead>
             <tr>
@@ -138,14 +124,14 @@
           </thead>
           <tbody>
           `;
-            for (let i = 0; i < data.length; i++) {
-              const urlParams = new URLSearchParams(window.location.search);
-              const filter = urlParams.get("filter");
-              if (
-                !filter ||
-                data[i].name.toUpperCase().includes(filter.toUpperCase())
-              ) {
-                result += `
+          for (let i = 0; i < data.length; i++) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const filter = urlParams.get("filter");
+            if (
+              !filter ||
+              data[i].name.toUpperCase().includes(filter.toUpperCase())
+            ) {
+              result += `
               <tr>
                 <th scope="row">${i + 1}</th>
                 <td>${data[i].name}</td>
@@ -157,93 +143,94 @@
                     type="submit" 
                     data-toggle="modal" 
                     data-target="#exampleModal" 
-                    data-symbol="${data[i].symbol}">
+                    data-name="${data[i].name}"
+                    data-symbol="${data[i].symbol}"
+                    data-price="${data[i].price}">
                       Buy Now
                   </button>
                 </td>
               </tr>
               `;
-              } else {
-                console.log(data[i].name + " does not include" + filter);
-              }
+            } else {
+              console.log(data[i].name + " does not include" + filter);
             }
-            result += `
+          }
+          result += `
         </tbody>
         </table>
         `;
-            document.getElementById("results").innerHTML = result;
-          });
-      }
-    </script>
+          document.getElementById("results").innerHTML = result;
+        });
+    }
+  </script>
 
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Buy this crypto currency
-            </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div id="order-description" class="modal-body">
-            Description of order here
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Cancel
-            </button>
-            <button type="button" class="btn btn-primary">
-              Comfirm Purchase
-            </button>
-          </div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Buy this crypto currency
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div id="order-description" class="modal-body">
+          Description of order here
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cancel
+          </button>
+          <button id="purchase-button" type="button" class="btn btn-primary">
+            Comfirm Purchase
+          </button>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
 
-  <!-- javascript for bootstrap -->
-  <script
-    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"
-  ></script>
-  <script>
-    $("#exampleModal").on("show.bs.modal", function (event) {
-      var button = $(event.relatedTarget); // Button that triggered the modal
-      var symbol = button.data("symbol"); // Extract info from data-* attributes
-      // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-      // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-      var modal = $(this);
-      modal.find(".modal-title").text("Buying " + symbol);
-    });
-  </script>
+<!-- javascript for bootstrap -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+  $("#exampleModal").on("show.bs.modal", function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var name = button.data("name");
+    var symbol = button.data("symbol"); // Extract info from data-* attributes
+    var purchase_price = button.data("price");
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this);
+    modal.find(".modal-title").text("Buying " + symbol);
+    modal.find("#purchase-button").on('click', () => {
+      const token = getCookie("token");
+      let userInfo = null;
+      console.log(token)
+      if (token) {
+        fetch(`/api/user/holdings/add`, {
+          method: "POST",
+          headers: { authorization: `Bearer ${token}`, 'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            name: name,
+            ticker: symbol,
+            purchase_price: purchase_price
+          })
+        })
+          .then((response) => response.json())
+          .then((dataObj) => {
+            console.log(dataObj);
+          });
+      }
+    })
+  });
+</script>
+
 </html>

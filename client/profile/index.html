@@ -52,7 +52,7 @@
             `);
             } else {
               document.write(`
-            <li class="nav-item">
+            <li class="nav-item active">
               <a class="nav-link" href="/profile">Profile </a>
             </li>
             <li class="nav-item">
@@ -66,7 +66,21 @@
     </nav>
     <!--END HEADER-->
 
-    <h1 id="greeting">Hi</h1>
+    <h1 id="greeting" style="text-align: center; padding: 1rem">Hi</h1>
+    <table style="width: 80%;" class="mt-4 mx-auto table table-striped">
+      <thead>
+        <tr>
+          <th> # </th>
+          <th> Name </th>
+          <th> Symbol </th>
+          <th> Price Bought </th>
+          <th>  </th>
+        </tr>
+      </thead>
+      <tbody id="holdings-list">
+
+      </tbody>
+    </table>
   </body>
 
   <!-- Optional JavaScript -->

@@ -98,9 +98,14 @@ const addHolding = (req, res) => {
       return res
         .status(400)
         .json({ success: false, message: "user does not exist" });
-    user.holdings.name = name;
-    user.holdings.ticker = ticker;
-    user.holdings.purchase_price = purchase_price;
+    console.log(req.body)
+    let holding = {
+      name: name,
+      ticker: ticker,
+      purchase_price: purchase_price
+    }
+    user.holdings.push(holding)
+
     user
       .save()
       .then(() => {
@@ -110,6 +115,7 @@ const addHolding = (req, res) => {
         });
       })
       .catch((err) => {
+        console.log(err)
         return res
           .status(400)
           .json({ success: false, message: "could not update user holdings" });

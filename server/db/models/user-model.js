@@ -15,8 +15,7 @@ const User = new Schema({
     {
       name: String,
       ticker: String,
-      purchase_price: Number,
-      purchase_time: String,
+      purchase_price: Number
     },
   ],
 });
