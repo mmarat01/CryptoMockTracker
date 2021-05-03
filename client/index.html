@@ -210,6 +210,8 @@
     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
     var modal = $(this);
     modal.find(".modal-title").text("Buying " + symbol);
+    modal.find("#order-description").text("Current price is $" + purchase_price.toFixed(2));
+    modal.find("#purchase-button").show()
     modal.find("#purchase-button").on('click', () => {
       const token = getCookie("token");
       let userInfo = null;
@@ -229,6 +231,8 @@
             console.log(dataObj);
           });
       }
+      modal.find("#order-description").text("Purchase Complete")
+      modal.find("#purchase-button").hide()
     })
   });
 </script>
