@@ -34,10 +34,7 @@ const register = (req, res) => {
         user
           .save()
           .then(() => {
-            return res.status(201).json({
-              success: true,
-              message: "new User created!",
-            });
+            res.redirect('/');
           })
           .catch((err) => {
             return res
