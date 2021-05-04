@@ -47,7 +47,10 @@ function writeHoldings() {
                 data-target="#exampleModal" 
                 data-name="${holding.name}"
                 data-symbol="${holding.ticker}"
-                data-price="${holding.purchase_price}">
+                data-price=${holding.purchase_price}
+                data-curr_price=${currentCrypto.price}
+                data-percent=${percentChange}
+              >
                   Sell
               </button>
               </td>
@@ -67,6 +70,8 @@ $("#exampleModal").on("show.bs.modal", function (event) {
   var name = button.data("name");
   var symbol = button.data("symbol"); // Extract info from data-* attributes
   var purchase_price = button.data("price");
+  var current_price = button.data("curr_price");
+  var percent_changee = button.data("percent");
   // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
   // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
   var modal = $(this);
@@ -75,9 +80,9 @@ $("#exampleModal").on("show.bs.modal", function (event) {
     `
     Purchase price was $${purchase_price.toFixed(2)}
     <br/>
-    Current price is:
+    Current price is: $${current_price.toFixed(2)}
     <br/>
-    Percent change:
+    Percent change: ${percent_changee.toFixed(2)}%
     `
   );
   modal.find("#order-description")
