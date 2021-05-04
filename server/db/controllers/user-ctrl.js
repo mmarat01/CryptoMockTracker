@@ -94,7 +94,6 @@ const addHolding = (req, res) => {
       return res
         .status(400)
         .json({ success: false, message: "user does not exist" });
-    console.log(req.body)
     let holding = {
       name: name,
       ticker: ticker,
@@ -129,29 +128,39 @@ const sellHolding = (req, res) => {
         .status(400)
         .json({ success: false, message: "user does not exist" });
 
+    let remove_idx = -1
     for (let i = 0; i < user.holdings.length; i++) {
       let holding = user.holdings[i]
       if (holding.name == name && holding.purchase_price == purchase_price) {
-        user.holdings.splice(i, 1)
+        remove_idx = i
         break
       }
     }
 
-    user
-      .save()
-      .then(() => {
-        return res.status(200).json({
-          success: true,
-          message: "user holdings updated",
+    if (remove_idx >= 0) {
+      user.holdings.splice(remove_idx, 1)
+      user
+        .save()
+        .then(() => {
+          return res.status(200).json({
+            success: true,
+            message: "user holdings updated",
+          });
+        })
+        .catch((err) => {
+          console.log(err)
+          return res
+            .status(400)
+            .json({ success: false, message: "could not update user holdings" });
         });
-      })
-      .catch((err) => {
-        console.log(err)
-        return res
-          .status(400)
-          .json({ success: false, message: "could not update user holdings" });
-      });
+    } else {
+      console.log("HOLDING NOT FOUND")
+      return res
+        .status(400)
+        .json({ success: false, message: "could not update user holdings" });
+    }
   });
+
 }
 
 module.exports = {

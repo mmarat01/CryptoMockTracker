@@ -38,7 +38,7 @@ function writeHoldings() {
               <td>${holding.ticker}</td>
               <td>$${holding.purchase_price.toFixed(2)}</td>
               <td>$${Number(currentCrypto.price).toFixed(2)}</td>
-              <td style="color:${percentChange > 0? "green": "red"}">${Number(percentChange).toFixed(2)}%</td>
+              <td style="color:${percentChange >= 0? "green": "red"}">${Number(percentChange).toFixed(2)}%</td>
               <td>
               <button 
                 class="btn btn-primary col-12" 
@@ -84,7 +84,7 @@ $("#exampleModal").on("show.bs.modal", function (event) {
 
   modal.find("#sale-button").show()
   modal.find("#cancel-button").text("Cancel")
-  modal.find("#sale-button").on('click', () => {
+  modal.find("#sale-button").unbind('click').click(() => {
     const token = getCookie("token");
 
     if (token) {
