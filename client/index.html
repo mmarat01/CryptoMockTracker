@@ -112,7 +112,8 @@
           console.log(dataObj.data);
           let data = dataObj.data;
           let result = `
-        <table style="width: 80%;" class="mt-4 mx-auto table table-striped">
+          <div class="mt-4 mx-auto" style="width: 80%; overflow: auto;">
+          <table class="table table-striped">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -158,6 +159,7 @@
           result += `
         </tbody>
         </table>
+        </div>
         `;
           document.getElementById("results").innerHTML = result;
         });

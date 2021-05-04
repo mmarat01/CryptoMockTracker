@@ -53,7 +53,7 @@
   </nav>
   <!--END HEADER-->
 
-  <h1 id="greeting" style="text-align: center; padding: 1rem">Hello</h1>
+  <h1 id="greeting" style="text-align: center; padding: 1rem">Loading Profile...</h1>
   <div class="card mx-auto" style="width: 80%;">
     <div class="card-header">
       Statistics
@@ -81,26 +81,27 @@
       </tr>
     </table>
   </div>
-  <!-- <h4 class="mt-2" style="text-align: center; padding: 1rem"> Current Holdings </h4> -->
-  <div class="card mx-auto mt-4" style="width: 80%;">
-    <div class="card-header">
+  <div class="card mx-auto my-4 search-table-outter" style="width: 80%;">
+    <div style="width: 100%;" class="card-header">
       Holdings
     </div>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th> # </th>
-          <th> Name </th>
-          <th> Symbol </th>
-          <th> Price Bought </th>
-          <th> Current Price </th>
-          <th> Net Change </th>
-          <th> </th>
-        </tr>
-      </thead>
-      <tbody id="holdings-list">
-      </tbody>
-    </table>
+    <div style="overflow-x: auto;">
+      <table style="max-width: 100%;" class="table table-striped">
+        <thead>
+          <tr>
+            <th> # </th>
+            <th> Name </th>
+            <th> Symbol </th>
+            <th> Price Bought </th>
+            <th> Current Price </th>
+            <th> Net Change </th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody id="holdings-list">
+        </tbody>
+      </table>
+    </div>
   </div>
 
 
