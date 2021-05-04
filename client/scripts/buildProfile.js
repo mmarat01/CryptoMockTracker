@@ -69,9 +69,9 @@ $("#exampleModal").on("show.bs.modal", function (event) {
   var button = $(event.relatedTarget); // Button that triggered the modal
   var name = button.data("name");
   var symbol = button.data("symbol"); // Extract info from data-* attributes
-  var purchase_price = button.data("price");
-  var current_price = button.data("curr_price");
-  var percent_changee = button.data("percent");
+  var purchase_price = Number(button.data("price"));
+  var current_price = Number(button.data("curr_price"));
+  var percent_changee = Number(button.data("percent"));
   // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
   // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
   var modal = $(this);
