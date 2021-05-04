@@ -31,6 +31,15 @@ const register = (req, res) => {
         const user = new User();
         user.username = req.body.username;
         user.password = hash;
+        let date_ob = new Date()
+        let date = ("0" + date_ob.getDate()).slice(-2);
+        let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+        let year = date_ob.getFullYear();
+        user.statistics = {
+          net_change: 0,
+          total_transactions: 0,
+          user_since: month + "/" + date + "/" + year
+        }
         user
           .save()
           .then(() => {
@@ -78,7 +87,10 @@ const getUser = (req, res) => {
 
       return res.status(200).json({
         sucess: true,
-        data: { username: user.username, holdings: user.holdings },
+        data: { 
+          username: user.username, 
+          holdings: user.holdings, 
+          statistcs: user.statistics },
       });
       f;
     }
@@ -100,6 +112,7 @@ const addHolding = (req, res) => {
       purchase_price: purchase_price
     }
     user.holdings.push(holding)
+    user.statistics.total_transactions += 1
 
     user
       .save()
@@ -119,7 +132,7 @@ const addHolding = (req, res) => {
 };
 
 const sellHolding = (req, res) => {
-  const { name, ticker, purchase_price } = req.body;
+  const { name, ticker, purchase_price, percent_change } = req.body;
   User.findOne({
     _id: new mongoose.Types.ObjectId(req.body._id),
   }).then((user) => {
@@ -138,6 +151,8 @@ const sellHolding = (req, res) => {
     }
 
     if (remove_idx >= 0) {
+      user.statistics.total_transactions += 1
+      user.statistics.net_change += percent_change
       user.holdings.splice(remove_idx, 1)
       user
         .save()

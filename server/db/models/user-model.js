@@ -18,6 +18,11 @@ const User = new Schema({
       purchase_price: Number
     },
   ],
+  statistics: {
+    net_change: Number,
+    total_transactions: Number,
+    user_since: Date
+  }
 });
 
 module.exports = mongoose.model("users", User);

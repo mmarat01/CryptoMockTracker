@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-  <title>Login</title>
+  <title>Profile</title>
   <script src="../scripts/cookies.js"></script>
   <script defer src="../scripts/buildProfile.js"></script>
   <link rel="stylesheet" href="../style.css" />
@@ -60,16 +60,24 @@
     </div>
     <table class="table">
       <tr>
-        <th scope="row"> Net Change: </th>
-        <td> ... </td>
+        <th scope="row"> Historical +/-: </th>
+        <td id="historical-stat"> ... </td>
+      </tr>
+      <tr>
+        <th scope="row"> Holdings +/-: </th>
+        <td id="holdings-stat"> ... </td>
+      </tr>
+      <tr>
+        <th scope="row"> Total +/-: </th>
+        <td id="total-stat"> ... </td>
       </tr>
       <tr>
         <th scope="row"> Total Transactions: </th>
-        <td> ... </td>
+        <td id="transaction-stat"> ... </td>
       </tr>
       <tr>
         <th scope="row"> User Since: </th>
-        <td> ... </td>
+        <td id="since-stat"> ... </td>
       </tr>
     </table>
   </div>
