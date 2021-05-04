@@ -92,14 +92,13 @@
           xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
               let response = JSON.parse(this.response);
-              alert(response.message);
               document.cookie = `token=${this.getResponseHeader(
                 "authorization"
               )}; expires=Thu, 2 Aug 2100 20:47:11 UTC; path=/`;
               window.location.href = "../";
             } else if (this.readyState == 4 && this.status == 400) {
               let response = JSON.parse(this.response);
-              alert(response.message);
+              alert(response.message)
             }
           };
           xhttp.open("POST", "../api/user/login", true);
