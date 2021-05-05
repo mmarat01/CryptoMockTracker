@@ -75,6 +75,16 @@
     </div>
   </nav>
   <!--END HEADER-->
+
+  <!--styling-->
+  <style>
+  .left-box{display: inline-block; width: 30%; height: 500px; padding: 10px 40px;
+    font-size: 25px; float:left; border-left: 50px solid white;}
+
+  .right-box{display: inline-block; float: left; padding: 50px 100px;
+    border: 20px solid white; border-left: 0px; width: 40%; font-size: 25px;}
+  </style>
+
   <script>
     if (getCookie("token") == "") {
       // user is not logged in
@@ -84,6 +94,16 @@
         <h4> Please register or log in to get started. </h4>
         <a class="btn btn-primary" href="/login" role="button">Login</a>
         <a class="btn btn-secondary" href="/register" role="button">Register</a>
+      </div>
+      <div style="text-align: center;">
+      <div class="left-box">
+      <img src="imgs/mainphoto.jpg" style="width:400px;">
+      </div>
+      <div class="right-box">
+        CryptoTracker allows you to keep track of your cryptocurrency holdings. Make an
+        account to track when they were purchased and the changes in value. Click log in or register above to get started.
+        Thank you for using our site!
+      </div>
       </div>
       `);
     } else {
@@ -139,11 +159,11 @@
                 <td>${data[i].symbol}</td>
                 <td>$${Number(data[i].price).toFixed(2)}</td>
                 <td>
-                  <button 
-                    class="btn btn-warning col-12" 
-                    type="submit" 
-                    data-toggle="modal" 
-                    data-target="#exampleModal" 
+                  <button
+                    class="btn btn-warning col-12"
+                    type="submit"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
                     data-name="${data[i].name}"
                     data-symbol="${data[i].symbol}"
                     data-price="${data[i].price}">
