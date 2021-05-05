@@ -78,12 +78,20 @@
 
   <!--styling-->
   <style>
-  .left-box{display: inline-block; width: 45%; height: 500px; padding: 10px 40px;
-    font-size: 25px; float:left; border-left: 50px solid white; padding-left: 130px;}
+  .left-box{display: inline-block; max-width: 50%; min-height: 500px; padding: 1rem;
+    font-size: 25px; float:left; border-left: 50px solid white; padding-left: 170px;}
 
   .right-box{display: inline-block; float: right; padding: 50px 100px;
-    border: 20px solid white; border-left: 0px; width: 50%; font-size: 25px; border-right: 20px solid white;
+    border: 20px solid white; border-left: 0px; max-width: 50%; font-size: 25px; padding-right: 70px;
     }
+
+  @media screen and (max-width:1000px) {
+    .left-box,.right-box {
+      float:none; min-width: 85vw;
+    }
+
+
+  }
   </style>
 
   <script>
@@ -96,7 +104,6 @@
         <a class="btn btn-primary" href="/login" role="button">Login</a>
         <a class="btn btn-secondary" href="/register" role="button">Register</a>
       </div>
-    <br>
       <div class="left-box">
       <img src="imgs/mainphoto.jpg" style="width:400px;">
       </div>
