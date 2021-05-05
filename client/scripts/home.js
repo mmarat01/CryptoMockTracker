@@ -1,17 +1,7 @@
 const token = getCookie("token");
 
 function loadPage() {
-  if (token == "") {
-    // user is not logged in
-    document.getElementById("body").innerHTML = `
-    <div style="text-align: center; margin: 30px 0 0 0">
-      <h1> Welcome To CryptoTracker! </h1>
-      <h4> Please register or log in to get started. </h4>
-      <a class="btn btn-primary" href="/login" role="button">Login</a>
-      <a class="btn btn-secondary" href="/register" role="button">Register</a>
-    </div>
-    `;
-  } else {
+  if (token != "") {
     fetch('api/user', {
       headers: { authorization: `Bearer ${token}` },
     })

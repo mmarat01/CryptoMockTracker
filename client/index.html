@@ -9,31 +9,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
   <title>Crypto Tracker</title>
-  <script>
-    const buyCurrency = (data) => {
-      document.getElementById("order-description").innerHTML = `
-      <table>
-        <tr>
-          <td> Buying:  </td>
-          <td> ${data.symbol}  </td>
-          <td> Current Price:  </td>
-          <td> ${data.price}  </td>
-        </tr>
-        <tr>
-          <td> Amount purchasing:  </td>
-          <td> 1 Unit </td>
-        </tr>
-      </table>
-      <div class="alert alert-warning" role="alert">
-        Warning: Price may change during purchase time.
-      </div>
-      `;
-    };
-  </script>
 </head>
 
 <body>
