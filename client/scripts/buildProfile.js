@@ -24,11 +24,8 @@ function writeHoldings() {
             console.log(userInfo)
             let greet = document.querySelector("#greeting");
             greet.innerHTML = `Hello ${userInfo.username}`;
-            document.querySelector('#historical-stat').innerHTML = Number(userInfo.statistcs.net_change).toFixed(2) + '%'
-            document.querySelector('#historical-stat').style.color = getColor(Number(userInfo.statistcs.net_change))
-            document.querySelector('#transaction-stat').innerHTML = userInfo.statistcs.total_transactions
 
-            let d = new Date(userInfo.statistcs.user_since);
+            let d = new Date(userInfo.statistics.user_since);
             let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
             let mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
             let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
@@ -36,7 +33,7 @@ function writeHoldings() {
 
             let holdings_list = document.querySelector("#holdings-list");
             holdings_list.innerHTML = ""
-            let holding_change = 0
+            let holdings_value = 0
             for (let i = 0; i < userInfo.holdings.length; i++) {
               holding = userInfo.holdings[i]
               // find holding in crypto array
@@ -48,41 +45,45 @@ function writeHoldings() {
                 }
               }
               let percentChange = ((Number(currentCrypto.price) - holding.purchase_price) / (holding.purchase_price)) * 100
-              holding_change += percentChange
+              holdings_value += currentCrypto.price * holding.amount
 
               holdings_list.innerHTML +=
                 `
-            <tr> 
-              <th scope="row">${i + 1}</th>
-              <td>${holding.name}</td>
-              <td>${holding.ticker}</td>
-              <td>$${holding.purchase_price.toFixed(2)}</td>
-              <td>$${Number(currentCrypto.price).toFixed(2)}</td>
-              <td style="color:${getColor(percentChange)}">${Number(percentChange).toFixed(2)}%</td>
-              <td>
-              <button 
-                class="btn btn-primary col-12" 
-                type="submit" 
-                data-toggle="modal" 
-                data-target="#exampleModal" 
-                data-name="${holding.name}"
-                data-symbol="${holding.ticker}"
-                data-price=${holding.purchase_price}
-                data-curr_price=${currentCrypto.price}
-                data-percent=${percentChange}
-              >
-                  Sell
-              </button>
-              </td>
-              
-            </tr>
-            `
+                <tr> 
+                  <th scope="row">${i + 1}</th>
+                  <td>${holding.name}</td>
+                  <td>${holding.ticker}</td>
+                  <td>$${(holding.purchase_price * holding.amount).toFixed(2)}</td>
+                  <td>$${Number(currentCrypto.price * holding.amount).toFixed(2)}</td>
+                  <td style="color:${getColor(percentChange)}">${Number(percentChange).toFixed(2)}%</td>
+                  <td>
+                  <button 
+                    class="btn btn-primary col-12" 
+                    type="submit" 
+                    data-toggle="modal" 
+                    data-target="#exampleModal" 
+                    data-name="${holding.name}"
+                    data-symbol="${holding.ticker}"
+                    data-price=${holding.purchase_price}
+                    data-curr_price=${currentCrypto.price}
+                    data-percent=${percentChange}
+                    data-amount=${holding.amount}
+                  >
+                      Sell
+                  </button>
+                  </td>
+
+                </tr>
+                `
             }
-            document.querySelector("#holdings-stat").innerHTML = holding_change.toFixed(2) + '%'
-            document.querySelector('#holdings-stat').style.color = getColor(holding_change)
-            let total_change = holding_change + Number(userInfo.statistcs.net_change)
-            document.querySelector("#total-stat").innerHTML = (total_change).toFixed(2) + '%'
-            document.querySelector('#total-stat').style.color = getColor(total_change)
+            document.querySelector('#balance').innerHTML = "$" + Number(userInfo.statistics.current_balance).toFixed(2)
+            document.querySelector('#initial').innerHTML = "$" + Number(userInfo.statistics.initial_balance).toFixed(2)
+            document.querySelector('#holdings-value').innerHTML = "$" + holdings_value.toFixed(2)
+            document.querySelector('#net-worth').innerHTML = "$" + (holdings_value + userInfo.statistics.current_balance).toFixed(2)
+            let total_change = (((holdings_value + userInfo.statistics.current_balance) - userInfo.statistics.initial_balance) / userInfo.statistics.initial_balance)
+            document.querySelector('#total').innerHTML = (total_change * 100).toFixed(2) + "%"
+            document.querySelector('#total').style.color = getColor(total_change)
+            document.querySelector('#transaction-stat').innerHTML = userInfo.statistics.total_transactions
           });
       })
   }
@@ -97,17 +98,44 @@ $("#exampleModal").on("show.bs.modal", function (event) {
   var purchase_price = Number(button.data("price"));
   var current_price = Number(button.data("curr_price"));
   var percent_change = Number(button.data("percent"));
+  var amount = Number(button.data("amount"));
+  console.log(amount)
   // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
   // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
   var modal = $(this);
   modal.find(".modal-title").text("Selling " + symbol);
   modal.find("#order-description").html(
     `
-    Purchase price was $${purchase_price.toFixed(2)}
-    <br/>
-    Current price is: $${current_price.toFixed(2)}
-    <br/>
-    Percent change: ${percent_change.toFixed(2)}%
+    <div class="mb-3 row">
+      <label for="currency" class="col-sm-4 col-form-label"> Currency </label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control-plaintext" id="staticCurrency" value="${name}">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="num_units" class="col-sm-4 col-form-label"> Amount </label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control-plaintext" id="num_units" value="${amount.toFixed(2)}">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label class="col-sm-4 col-form-label"> Purchase Value </label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control-plaintext" value="$${(purchase_price * amount).toFixed(2)}">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label class="col-sm-4 col-form-label"> Current Value </label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control-plaintext"value="$${(current_price * amount).toFixed(2)}">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label class="col-sm-4 col-form-label"> Net Change </label>
+      <div class="col-sm-8">
+        <input type="text" style="color: ${getColor(percent_change)}" readonly class="form-control-plaintext"value="${(percent_change).toFixed(2)}%">
+      </div>
+    </div>
     `
   );
   modal.find("#order-description")
@@ -124,8 +152,8 @@ $("#exampleModal").on("show.bs.modal", function (event) {
         body: JSON.stringify({
           name: name,
           ticker: symbol,
-          purchase_price: purchase_price,
-          percent_change: percent_change
+          current_price: current_price,
+          amount: amount
         })
       })
         .then((response) => response.json())

@@ -15,11 +15,13 @@ const User = new Schema({
     {
       name: String,
       ticker: String,
-      purchase_price: Number
+      purchase_price: Number,
+      amount: Number
     },
   ],
   statistics: {
-    net_change: Number,
+    initial_balance: Number,
+    current_balance: Number,
     total_transactions: Number,
     user_since: Date
   }
