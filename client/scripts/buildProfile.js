@@ -68,6 +68,7 @@ function writeHoldings() {
                     data-curr_price=${currentCrypto.price}
                     data-percent=${percentChange}
                     data-amount=${holding.amount}
+                    data-index=${i}
                   >
                       Sell
                   </button>
@@ -99,6 +100,7 @@ $("#exampleModal").on("show.bs.modal", function (event) {
   var current_price = Number(button.data("curr_price"));
   var percent_change = Number(button.data("percent"));
   var amount = Number(button.data("amount"));
+  var index = button.data("index");
   console.log(amount)
   // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
   // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
@@ -153,7 +155,8 @@ $("#exampleModal").on("show.bs.modal", function (event) {
           name: name,
           ticker: symbol,
           current_price: current_price,
-          amount: amount
+          amount: amount,
+          index: index
         })
       })
         .then((response) => response.json())

@@ -134,7 +134,7 @@ const addHolding = (req, res) => {
 };
 
 const sellHolding = (req, res) => {
-  const { name, ticker, current_price, amount } = req.body;
+  const { name, ticker, current_price, amount, index } = req.body;
   User.findOne({
     _id: new mongoose.Types.ObjectId(req.body._id),
   }).then((user) => {
@@ -143,19 +143,10 @@ const sellHolding = (req, res) => {
         .status(400)
         .json({ success: false, message: "user does not exist" });
 
-    let remove_idx = -1
-    for (let i = 0; i < user.holdings.length; i++) {
-      let holding = user.holdings[i]
-      if (holding.name == name) {
-        remove_idx = i
-        break
-      }
-    }
-
-    if (remove_idx >= 0) {
+    if (index >= 0) {
       user.statistics.total_transactions += 1
       user.statistics.current_balance += amount * current_price
-      user.holdings.splice(remove_idx, 1)
+      user.holdings.splice(index, 1)
 
       user
         .save()
