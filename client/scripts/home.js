@@ -160,6 +160,7 @@ $("#exampleModal").on("show.bs.modal", function (event) {
       })
 
       modal.find("#purchase-button").show()
+      modal.find("#purchase-button").prop("disabled", false)
       modal.find("#cancel-button").text("Cancel")
       modal.find("#purchase-button").unbind('click').click(() => {
         if (token) {
