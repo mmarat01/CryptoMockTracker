@@ -75,10 +75,132 @@
     </div>
   </nav>
   <!--END HEADER-->
-  <div id="body">
 
-  </div>
+  <!--styling-->
+  <style>
+  .left-box{display: inline-block; max-width: 50%; min-height: 300px; padding: 1rem;
+    font-size: 25px; float:left; border-left: 50px solid white; padding-left: 170px;
+    padding-top: 20px;}
 
+
+  .right-box{display: inline-block; float: right; padding: 50px;
+    border: 20px solid white; border-left: 0px; max-width: 50%; font-size: 25px; padding-right: 70px;
+    }
+
+  @media screen and (max-width:1100px) {
+    .left-box,.right-box {float:none; min-width: 85vw;}
+  }
+
+  @media only screen and (max-width: 600) {
+    .left-box img {min-width: 100%; max-height: 400px;}
+    .left-box {min-width: 99vw;}
+  }
+
+
+
+  </style>
+
+  <script>
+    if (getCookie("token") == "") {
+      // user is not logged in
+      document.write(`
+      <div style="text-align: center; margin: 30px 0 0 0">
+        <h1> Welcome To CryptoTracker! </h1>
+        <h4> Please register or log in to get started. </h4>
+        <a class="btn btn-primary" href="/login" role="button">Login</a>
+        <a class="btn btn-secondary" href="/register" role="button">Register</a>
+      </div>
+      <div style="align-items: center;">
+      <div class="left-box">
+      <img src="imgs/mainphoto.jpg" style="width:400px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+      </div>
+      <div class="right-box">
+        CryptoTracker allows you to keep track of your cryptocurrency holdings. Make an
+        account to track when they were purchased and the changes in value. Click log in or register above to get started.
+        Thank you for using our site!
+      </div>
+      </div>
+
+      `);
+    } else {
+      // user is logged in
+      document.write(`
+      <div style="text-align: center; margin: 30px 0 0 0">
+        <h1> Welcome, User! </h1>
+        <h4>Search For Crypto Currencies:</h4>
+        <div class="mx-auto col-md-6 col-sm-8" >
+          <form style="box-sizing: border-box" class="form-inline my-2 my-lg-0">
+            <input class="form-control" style="width: 70%; margin-right: 10px" type="search" name="filter" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" style="width: 25%;" type="submit">Search</button>
+          </form>
+        </div>
+        <div id="results">
+        </div>
+      </div>
+      `);
+    }
+  </script>
+  <script>
+    if (getCookie("token")) {
+      fetch("/api/crypto/all")
+        .then((response) => response.json())
+        .then((dataObj) => {
+          console.log(dataObj.data);
+          let data = dataObj.data;
+          let result = `
+          <div class="mt-4 mx-auto" style="width: 80%; overflow: auto;">
+          <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Symbol</th>
+              <th scope="col">Price</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+          `;
+          for (let i = 0; i < data.length; i++) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const filter = urlParams.get("filter");
+            if (
+              !filter ||
+              data[i].name.toUpperCase().includes(filter.toUpperCase())
+            ) {
+              result += `
+              <tr>
+                <th scope="row">${i + 1}</th>
+                <td>${data[i].name}</td>
+                <td>${data[i].symbol}</td>
+                <td>$${Number(data[i].price).toFixed(2)}</td>
+                <td>
+                  <button
+                    class="btn btn-warning col-12"
+                    type="submit"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    data-name="${data[i].name}"
+                    data-symbol="${data[i].symbol}"
+                    data-price="${data[i].price}">
+                      Buy Now
+                  </button>
+                </td>
+              </tr>
+              `;
+            } else {
+              console.log(data[i].name + " does not include" + filter);
+            }
+          }
+          result += `
+        </tbody>
+        </table>
+        </div>
+        `;
+          document.getElementById("results").innerHTML = result;
+        });
+    }
+  </script>
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
