@@ -79,19 +79,22 @@
   <!--styling-->
   <style>
   .left-box{display: inline-block; max-width: 50%; min-height: 300px; padding: 1rem;
-    font-size: 25px; float:left; border-left: 50px solid white; padding-left: 140px;}
+    font-size: 25px; float:left; border-left: 50px solid white; padding-left: 170px;
+    padding-top: 20px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
 
-  .right-box{display: inline-block; float: right; padding: 50px 100px;
+  .right-box{display: inline-block; float: right; padding: 50px;
     border: 20px solid white; border-left: 0px; max-width: 50%; font-size: 25px; padding-right: 70px;
     }
 
-  @media screen and (max-width:1000px) {
-    .left-box,.right-box {
-      float:none; min-width: 85vw;
-    }
-
-
+  @media screen and (max-width:1100px) {
+    .left-box,.right-box {float:none; min-width: 85vw;}
   }
+
+@media screen and (max-width: 600) {
+  .left-box img {min-width: 100%; max-height: 400px;}
+  .left-box {min-width: 99vw;}
+}
+
   </style>
 
   <script>
@@ -104,7 +107,7 @@
         <a class="btn btn-primary" href="/login" role="button">Login</a>
         <a class="btn btn-secondary" href="/register" role="button">Register</a>
       </div>
-    <br>
+      <div style="align-items: center;">
       <div class="left-box">
       <img src="imgs/mainphoto.jpg" style="width:400px;">
       </div>
@@ -112,6 +115,7 @@
         CryptoTracker allows you to keep track of your cryptocurrency holdings. Make an
         account to track when they were purchased and the changes in value. Click log in or register above to get started.
         Thank you for using our site!
+      </div>
       </div>
 
       `);
