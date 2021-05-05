@@ -23,7 +23,7 @@ function writeHoldings() {
             userInfo = dataObj.data;
             console.log(userInfo)
             let greet = document.querySelector("#greeting");
-            greet.innerHTML = `Profile of ${userInfo.username}`;
+            greet.innerHTML = `Profile of ${userInfo.username.split('@')[0]}`;
 
             let d = new Date(userInfo.statistics.user_since);
             let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
