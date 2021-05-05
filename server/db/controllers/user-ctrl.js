@@ -31,19 +31,19 @@ const register = (req, res) => {
         const user = new User();
         user.username = req.body.username;
         user.password = hash;
-        let date_ob = new Date()
+        let date_ob = new Date();
         let date = ("0" + date_ob.getDate()).slice(-2);
         let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
         let year = date_ob.getFullYear();
         user.statistics = {
           net_change: 0,
           total_transactions: 0,
-          user_since: month + "/" + date + "/" + year
-        }
+          user_since: month + "/" + date + "/" + year,
+        };
         user
           .save()
           .then(() => {
-            res.redirect('/');
+            res.redirect("/");
           })
           .catch((err) => {
             return res
@@ -87,10 +87,11 @@ const getUser = (req, res) => {
 
       return res.status(200).json({
         sucess: true,
-        data: { 
-          username: user.username, 
-          holdings: user.holdings, 
-          statistcs: user.statistics },
+        data: {
+          username: user.username,
+          holdings: user.holdings,
+          statistcs: user.statistics,
+        },
       });
       f;
     }
@@ -106,13 +107,15 @@ const addHolding = (req, res) => {
       return res
         .status(400)
         .json({ success: false, message: "user does not exist" });
+
     let holding = {
       name: name,
       ticker: ticker,
-      purchase_price: purchase_price
-    }
-    user.holdings.push(holding)
-    user.statistics.total_transactions += 1
+      purchase_price: purchase_price,
+    };
+
+    user.holdings.push(holding);
+    user.statistics.total_transactions += 1;
 
     user
       .save()
@@ -123,7 +126,7 @@ const addHolding = (req, res) => {
         });
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         return res
           .status(400)
           .json({ success: false, message: "could not update user holdings" });
@@ -141,19 +144,19 @@ const sellHolding = (req, res) => {
         .status(400)
         .json({ success: false, message: "user does not exist" });
 
-    let remove_idx = -1
+    let remove_idx = -1;
     for (let i = 0; i < user.holdings.length; i++) {
-      let holding = user.holdings[i]
+      let holding = user.holdings[i];
       if (holding.name == name && holding.purchase_price == purchase_price) {
-        remove_idx = i
-        break
+        remove_idx = i;
+        break;
       }
     }
 
     if (remove_idx >= 0) {
-      user.statistics.total_transactions += 1
-      user.statistics.net_change += percent_change
-      user.holdings.splice(remove_idx, 1)
+      user.statistics.total_transactions += 1;
+      user.statistics.net_change += percent_change;
+      user.holdings.splice(remove_idx, 1);
       user
         .save()
         .then(() => {
@@ -163,25 +166,25 @@ const sellHolding = (req, res) => {
           });
         })
         .catch((err) => {
-          console.log(err)
-          return res
-            .status(400)
-            .json({ success: false, message: "could not update user holdings" });
+          console.log(err);
+          return res.status(400).json({
+            success: false,
+            message: "could not update user holdings",
+          });
         });
     } else {
-      console.log("HOLDING NOT FOUND")
+      console.log("HOLDING NOT FOUND");
       return res
         .status(400)
         .json({ success: false, message: "could not update user holdings" });
     }
   });
-
-}
+};
 
 module.exports = {
   register,
   login,
   getUser,
   addHolding,
-  sellHolding
+  sellHolding,
 };
