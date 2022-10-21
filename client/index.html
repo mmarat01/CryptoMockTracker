@@ -9,31 +9,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
   <title>Crypto Tracker</title>
-  <script>
-    const buyCurrency = (data) => {
-      document.getElementById("order-description").innerHTML = `
-      <table>
-        <tr>
-          <td> Buying:  </td>
-          <td> ${data.symbol}  </td>
-          <td> Current Price:  </td>
-          <td> ${data.price}  </td>
-        </tr>
-        <tr>
-          <td> Amount purchasing:  </td>
-          <td> 1 Unit </td>
-        </tr>
-      </table>
-      <div class="alert alert-warning" role="alert">
-        Warning: Price may change during purchase time.
-      </div>
-      `;
-    };
-  </script>
 </head>
 
 <body>
@@ -80,7 +58,8 @@
   <style>
   .left-box{display: inline-block; max-width: 50%; min-height: 300px; padding: 1rem;
     font-size: 25px; float:left; border-left: 50px solid white; padding-left: 170px;
-    padding-top: 20px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
+    padding-top: 20px;}
+
 
   .right-box{display: inline-block; float: right; padding: 50px;
     border: 20px solid white; border-left: 0px; max-width: 50%; font-size: 25px; padding-right: 70px;
@@ -90,10 +69,12 @@
     .left-box,.right-box {float:none; min-width: 85vw;}
   }
 
-@media screen and (max-width: 600) {
-  .left-box img {min-width: 100%; max-height: 400px;}
-  .left-box {min-width: 99vw;}
-}
+  @media only screen and (max-width: 600) {
+    .left-box img {min-width: 100%; max-height: 400px;}
+    .left-box {min-width: 99vw;}
+  }
+
+
 
   </style>
 
@@ -109,7 +90,7 @@
       </div>
       <div style="align-items: center;">
       <div class="left-box">
-      <img src="imgs/mainphoto.jpg" style="width:400px;">
+      <img src="imgs/mainphoto.jpg" style="width:400px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
       </div>
       <div class="right-box">
         CryptoTracker allows you to keep track of your cryptocurrency holdings. Make an
@@ -198,7 +179,6 @@
         });
     }
   </script>
-
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -235,43 +215,6 @@
   integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
   integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script>
-  $("#exampleModal").on("show.bs.modal", function (event) {
-    var button = $(event.relatedTarget); // Button that triggered the modal
-    var name = button.data("name");
-    var symbol = button.data("symbol"); // Extract info from data-* attributes
-    var purchase_price = Number(button.data("price"));
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    var modal = $(this);
-    modal.find(".modal-title").text("Buying " + symbol);
-    modal.find("#order-description").text("Current price is $" + purchase_price.toFixed(2));
-    modal.find("#purchase-button").show()
-    modal.find("#cancel-button").text("Cancel")
-    modal.find("#purchase-button").unbind('click').click(() => {
-      const token = getCookie("token");
-      let userInfo = null;
-      console.log(token)
-      if (token) {
-        fetch(`/api/user/holdings/add`, {
-          method: "POST",
-          headers: { authorization: `Bearer ${token}`, 'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            name: name,
-            ticker: symbol,
-            purchase_price: purchase_price
-          })
-        })
-          .then((response) => response.json())
-          .then((dataObj) => {
-            console.log(dataObj);
-          });
-      }
-      modal.find("#order-description").text("Purchase Complete")
-      modal.find("#cancel-button").text("Close")
-      modal.find("#purchase-button").hide()
-    })
-  });
-</script>
+<script src="scripts/home.js"></script>
 
 </html>
